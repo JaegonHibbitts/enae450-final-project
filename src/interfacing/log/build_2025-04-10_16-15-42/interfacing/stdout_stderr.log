@@ -1,0 +1,37 @@
+running egg_info
+creating build/interfacing/interfacing.egg-info
+writing build/interfacing/interfacing.egg-info/PKG-INFO
+writing dependency_links to build/interfacing/interfacing.egg-info/dependency_links.txt
+writing entry points to build/interfacing/interfacing.egg-info/entry_points.txt
+writing requirements to build/interfacing/interfacing.egg-info/requires.txt
+writing top-level names to build/interfacing/interfacing.egg-info/top_level.txt
+writing manifest file 'build/interfacing/interfacing.egg-info/SOURCES.txt'
+reading manifest file 'build/interfacing/interfacing.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file 'build/interfacing/interfacing.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build
+creating /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib
+creating /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing
+copying interfacing/move_forward.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing
+copying interfacing/__init__.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing
+running install
+running install_lib
+creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing/move_forward.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing/__init__.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing
+byte-compiling /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing/move_forward.py to move_forward.cpython-310.pyc
+Sorry: IndentationError: expected an indented block after function definition on line 16 (move_forward.py, line 17)
+byte-compiling /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing/__init__.py to __init__.cpython-310.pyc
+running install_data
+creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index
+creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index/resource_index
+creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index/resource_index/packages
+copying resource/interfacing -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index/resource_index/packages
+copying package.xml -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/interfacing
+running install_egg_info
+Copying build/interfacing/interfacing.egg-info to /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing-0.0.0-py3.10.egg-info
+running install_scripts
+Installing move_forward script to /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/interfacing
+writing list of installed files to '/home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/install.log'
