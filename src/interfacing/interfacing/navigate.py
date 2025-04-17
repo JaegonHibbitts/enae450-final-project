@@ -45,9 +45,9 @@ class movement(Node):
 
        
     def obstacle(self,msg):
-        x = len(msg.ranges)//3
-        for j in range(x):
-            i = j + x
+        x = len(msg.ranges)//8
+        for j in range(2*x):
+            i = j + 3*x
             if (msg.ranges[i] < .5) and (msg.ranges[i] > msg.range_min):
                 self.stop = 1
                 break
