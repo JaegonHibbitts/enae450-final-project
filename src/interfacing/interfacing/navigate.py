@@ -16,43 +16,67 @@ class movement(Node):
         self.Lidardis = self.create_subscription(LaserScan, "scan", self.obstacle, 10)
        
         self.forward_velocity_ = self.create_publisher(Twist, "cmd_vel", 10)
-        self.timer = self.create_timer(0.5, self.set_velocity)
+        self.timer = self.create_timer(0.7, self.set_velocity)
         # create publisher under type Twist
         self.i = 0
         self.stop = 0
 
-    def navigate(self,msg):
-        if self.stop == 1:
-            x = len(msg.ranges)//6
-            for j in range(x):
-                i = j + x
-                if (msg.ranges[i] > 1) and (msg.ranges[i] < msg.range_max):
-                    while(self.stop == 1):
-                        self.turnL
-                    self.turnL
-                    break
-            for j in range(x):
-                i = j + 4*x
-                if (msg.ranges[i] > 1) and (msg.ranges[i] < msg.range_max):
-                    while(self.stop == 1):
-                        self.turnR
-                    self.turnR
-                    break
-            while(self.stop == 1):
-                self.turnL
-            self.turnL
+        self.act_dist = 0.3
 
+        self.toggle = False
+
+    def navigate(self,msg):
+        self.get_logger().info('Turning')
+        x = len(msg.ranges) // 8
+    
+        lwall = False
+        rwall = False
+        if self.stop == 1:
+
+            # Left
+            for j in range(int(x*1.5)):
+                i = j + 2*x
+                if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+                    lwall = True
+            
+            # Right
+            for j in range(x):
+                i = j + 5*x
+                if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+                    rwall = False
+
+
+            if rwall: self.turnL()
+            elif lwall: self.turnR()
+            return
+
+        # Left
+        for j in range(int(x*1.5)):
+            i = j + 2*x
+            if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+                lwall = True
+
+        # Right
+        for j in range(x):
+            i = j + 5*x
+            if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+                rwall = False
+        
+        if not rwall and not lwall: self.turnL()
 
        
     def obstacle(self,msg):
-        x = len(msg.ranges)//8
-        for j in range(2*x):
-            i = j + 3*x
-            if (msg.ranges[i] < .5) and (msg.ranges[i] > msg.range_min):
-                self.stop = 1
-                break
-            else:
-                self.stop = 0
+        if self.toggle:
+            x = len(msg.ranges)//8
+            for j in range(2*x):
+                i = j + 3*x
+                if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+                    self.stop = 1
+                    break
+                else:
+                    self.stop = 0
+        else:
+            self.navigate(msg)
       
                 
     def set_velocity(self):
@@ -71,16 +95,21 @@ class movement(Node):
     def turnL(self):
         msg = Twist()
         if self.stop == 1:
-            msg.angular.z = -.1
+            msg.angular.z = -.3
         else:
-            msg.angular.z = 0
+            msg.angular.z = .0
+        
+        self.forward_velocity_.publish(msg)
 
     def turnR(self):
         msg = Twist()
         if self.stop == 1:
-            msg.angular.z = .1
+            msg.angular.z = .3
         else:
-            msg.angular.z = 0
+            msg.angular.z = .0
+
+        self.forward_velocity_.publish(msg)
+        
 
 
 def main(args=None):
