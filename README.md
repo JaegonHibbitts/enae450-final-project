@@ -1,4 +1,6 @@
 # Scripts
  + move_forward
  + wallfollow
- + navigate
+ + h1
+ + halpha
+ + hbeta

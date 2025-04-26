@@ -21,8 +21,10 @@ setup(
     entry_points={
         'console_scripts': [
             'move_forward = interfacing.move_forward:main',
-            'navigate = interfacing.navigate:main',
-            'wallfollow = interfacing.loop_around_wallfollow:main'
+            'wallfollow = interfacing.loop_around_wallfollow:main',
+            'h1 = interfacing.navigate_h1:main',
+            'halpha = interfacing.navigate_halpha:main',
+            'hbeta = interfacing.navigate_hbeta:main'
         ],
     },
 )

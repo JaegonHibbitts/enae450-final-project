@@ -1,3 +1,5 @@
+# VERY weak algorihtm
+
 from time import sleep
 
 import rclpy
