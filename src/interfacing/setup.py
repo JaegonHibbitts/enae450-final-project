@@ -20,7 +20,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'move_forward = interfacing.move_forward:main'
+            'move_forward = interfacing.move_forward:main',
+            'navigate = interfacing.navigate:main',
+            'wallfollow = interfacing.loop_around_wallfollow:main'
         ],
     },
 )
