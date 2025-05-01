@@ -24,7 +24,8 @@ setup(
             'wallfollow = interfacing.loop_around_wallfollow:main',
             'h1 = interfacing.navigate_h1:main',
             'halpha = interfacing.navigate_halpha:main',
-            'hbeta = interfacing.navigate_hbeta:main'
+            'hbeta = interfacing.navigate_hbeta:main',
+            'Avers = interfacing.Aversion:main'
         ],
     },
 )
