@@ -30,21 +30,21 @@ class movement(Node):
                 i = j + x
                 if (msg.ranges[i] > 1) and (msg.ranges[i] < msg.range_max):
                     while(self.stop == 1):
-                        self.turnL
-                    self.turnL
+                        self.turnL()
+                    self.turnL()
                     break
                 # check left range, if the range on the left is open, turn left
             for j in range(x):
                 i = j + 4*x
                 if (msg.ranges[i] > 1) and (msg.ranges[i] < msg.range_max):
                     while(self.stop == 1):
-                        self.turnR
-                    self.turnR
+                        self.turnR()
+                    self.turnR()
                     break
                 # check right range, if the range on the right is open, turn right
             while(self.stop == 1):
-                self.turnL
-            self.turnL
+                self.turnL()
+            self.turnL()
             # if there are obstacles everywhere, turn left
 
 
@@ -65,7 +65,7 @@ class movement(Node):
 
         if self.stop == 0:
             # if the robot is moving
-            if max(msg.ranges[range(x)+3*x]) > max(msg.ranges[range(x)+4*x]):
+            if max(msg.ranges[arange(1,x+1)+3*x]) > max(msg.ranges[arange(1,x+1)+4*x]):
                 pub.angular.z = -.1
                 # if the largest lidar value is to the left, go left
             else:
