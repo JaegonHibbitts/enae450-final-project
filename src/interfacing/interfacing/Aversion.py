@@ -68,13 +68,13 @@ class movement(Node):
         if self.stop == 0:
             # if the robot is moving
             if max(msg.ranges[3*x : 4*x]) > max(msg.ranges[4*x : 5*x]):
-                pub.angular.z = -.1
+                pub.angular.z = .1
                 # if the largest lidar value is to the left, go left
             else:
-                pub.angular.z = .1
+                pub.angular.z = -.1
                 # if the largest lidar value is to the right, go right
             self.forward_velocity_.publish(pub)
-            self.get_logger().info('Publishing Angular V: "%f"' % pub.angular.z)
+            self.get_logger().info('Publishing Angular V nav: "%f"' % pub.angular.z)
 
         self.navigate(msg)
         #avoid obstacle
@@ -97,20 +97,20 @@ class movement(Node):
     def turnL(self):
         msg = Twist()
         if self.stop == 1:
-            msg.angular.z = -.1
+            msg.angular.z = .1
         else:
             msg.angular.z = 0
             self.forward_velocity_.publish(msg)
-        self.get_logger().info('Publishing Angular V: "%f"' % msg.angular.z)
+        self.get_logger().info('Publishing Angular V Obst: "%f"' % msg.angular.z)
 
     def turnR(self):
         msg = Twist()
         if self.stop == 1:
-            msg.angular.z = .1
+            msg.angular.z = -.1
         else:
             msg.angular.z = 0
         self.forward_velocity_.publish(msg)
-        self.get_logger().info('Publishing Angular V: "%f"' % msg.angular.z)
+        self.get_logger().info('Publishing Angular V Obst: "%f"' % msg.angular.z)
 
 
 def main(args=None):
