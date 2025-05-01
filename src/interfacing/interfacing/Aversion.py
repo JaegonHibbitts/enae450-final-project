@@ -65,7 +65,7 @@ class movement(Node):
 
         if self.stop == 0:
             # if the robot is moving
-            if max(msg.ranges[arange(1,x+1)+3*x]) > max(msg.ranges[arange(1,x+1)+4*x]):
+            if max(msg.ranges[3*x : 4*x]) > max(msg.ranges[4*x : 5*x]):
                 pub.angular.z = -.1
                 # if the largest lidar value is to the left, go left
             else:
