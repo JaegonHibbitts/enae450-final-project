@@ -57,10 +57,12 @@ class movement(Node):
             i = j + 3*x
             if (msg.ranges[i] < .5) and (msg.ranges[i] > msg.range_min):
                 self.stop = 1
+                self.get_logger().info('Stopped')
                 break
                 # if there is an obstacle stop robot
             else:
                 self.stop = 0
+                self.get_logger().info('Moving')
                 # else let robot move forward.
 
         if self.stop == 0:
