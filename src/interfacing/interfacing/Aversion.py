@@ -30,21 +30,21 @@ class movement(Node):
                 i = j + x
                 if (msg.ranges[i] > 1) and (msg.ranges[i] < msg.range_max):
                     while(self.stop == 1):
-                        self.turnL
-                    self.turnL
+                        self.turnL()
+                    self.turnL()
                     break
                 # check left range, if the range on the left is open, turn left
             for j in range(x):
                 i = j + 4*x
                 if (msg.ranges[i] > 1) and (msg.ranges[i] < msg.range_max):
                     while(self.stop == 1):
-                        self.turnR
-                    self.turnR
+                        self.turnR()
+                    self.turnR()
                     break
                 # check right range, if the range on the right is open, turn right
             while(self.stop == 1):
-                self.turnL
-            self.turnL
+                self.turnL()
+            self.turnL()
             # if there are obstacles everywhere, turn left
 
 
@@ -57,22 +57,24 @@ class movement(Node):
             i = j + 3*x
             if (msg.ranges[i] < .5) and (msg.ranges[i] > msg.range_min):
                 self.stop = 1
+                self.get_logger().info('Stopped')
                 break
                 # if there is an obstacle stop robot
             else:
                 self.stop = 0
+                self.get_logger().info('Moving')
                 # else let robot move forward.
 
         if self.stop == 0:
             # if the robot is moving
-            if max(msg.ranges[range(x)+3*x]) > max(msg.ranges[range(x)+4*x]):
-                pub.angular.z = -.1
+            if max(msg.ranges[3*x : 4*x]) > max(msg.ranges[4*x : 5*x]):
+                pub.angular.z = .1
                 # if the largest lidar value is to the left, go left
             else:
-                pub.angular.z = .1
+                pub.angular.z = -.1
                 # if the largest lidar value is to the right, go right
             self.forward_velocity_.publish(pub)
-            self.get_logger().info('Publishing Angular V: "%f"' % pub.angular.z)
+            self.get_logger().info('Publishing Angular V nav: "%f"' % pub.angular.z)
 
         self.navigate(msg)
         #avoid obstacle
@@ -95,20 +97,20 @@ class movement(Node):
     def turnL(self):
         msg = Twist()
         if self.stop == 1:
-            msg.angular.z = -.1
+            msg.angular.z = .1
         else:
             msg.angular.z = 0
             self.forward_velocity_.publish(msg)
-        self.get_logger().info('Publishing Angular V: "%f"' % msg.angular.z)
+        self.get_logger().info('Publishing Angular V Obst: "%f"' % msg.angular.z)
 
     def turnR(self):
         msg = Twist()
         if self.stop == 1:
-            msg.angular.z = .1
+            msg.angular.z = -.1
         else:
             msg.angular.z = 0
         self.forward_velocity_.publish(msg)
-        self.get_logger().info('Publishing Angular V: "%f"' % msg.angular.z)
+        self.get_logger().info('Publishing Angular V Obst: "%f"' % msg.angular.z)
 
 
 def main(args=None):
