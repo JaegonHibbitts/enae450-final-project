@@ -4,6 +4,7 @@
 # Hyperparameters
 #  1. Commitment Clocks
 
+import math
 import rclpy
 from rclpy.node import Node
 
@@ -12,7 +13,7 @@ from sensor_msgs.msg import LaserScan
 
 import collections
 
-class CollisionBox(collections.namedtuple('CBox', ['hw', 'l']):
+class CollisionBox(collections.namedtuple('CBox', ['hw', 'l'])):
     """ Collision Box
     Represents a virtual collision box at the front of the robot.
     Has a half-width and a length
@@ -96,7 +97,7 @@ class Movement(Node):
 
 
     def navigate(self,msg):
-        (sensor_dist, sensor_position) = sense(self, msg)
+        (sensor_dist, sensor_position) = self.sense(msg)
 
         bias_cutoff = len(msg.ranges)//2
 
@@ -141,7 +142,7 @@ class Movement(Node):
             self.stop = 0
 
             # Commitment Clock
-            self.commit_clocks = (self.clock + 1) % self.commit_clocks_max
+            self.commit_clocks = (self.commit_clocks + 1) % self.commit_clocks_max
             if self.commit_clocks == 0:
                 self.navigate(msg)
     

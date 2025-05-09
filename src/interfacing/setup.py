@@ -25,7 +25,11 @@ setup(
             'h1 = interfacing.navigate_h1:main',
             'halpha = interfacing.navigate_halpha:main',
             'hbeta = interfacing.navigate_hbeta:main',
-            'Avers = interfacing.Aversion:main'
+            'Avers = interfacing.Aversion:main',
+            'Gazebo = interfacing.Gazebo_Follow:main',
+            'FollowInside = interfacing.Gazebo_Inside_Follow:main',
+            'FollowOutside = interfacing.Gazebo_Outside_Follow:main',
+            'Gazebo_Chat = interfacing.Gazebo_Find_Path:main',
         ],
     },
 )
