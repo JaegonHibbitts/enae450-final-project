@@ -122,7 +122,10 @@ class RobotController(Node):
 
 
     def navigate(self,msg):
+<<<<<<< Updated upstream
+=======
         """ Points robot at furthest unknown. """
+>>>>>>> Stashed changes
         (sensor_dist, sensor_position) = self.sense(msg)
 
         bias_cutoff = len(msg.ranges)//2
