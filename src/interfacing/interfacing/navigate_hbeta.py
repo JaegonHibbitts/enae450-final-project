@@ -1,3 +1,5 @@
+# More Complex Maze Programs
+#
 # Perfect Heuristic Far execution
 # Fastest approach
 # Works well for SIMPLE disjoint mazes
@@ -7,7 +9,7 @@
 #  |____________   _____________|
 #              |  END >>
 #              |______ 
-# Robot would bounce back and forth once
+# Robot would bounce back and forth a limited number of times
 # Between the ends of the wall
 # Where it's excellent
 # ___________________________________
@@ -33,9 +35,9 @@ from sensor_msgs.msg import LaserScan
 
 import numpy as np 
 
-class movement(Node):
+class RobotController(Node):
     def __init__(self):
-        super().__init__("number_publisher")
+        super().__init__("hbeta_robot_controller")
 
         # Sub to sensor
         self.Lidardis = self.create_subscription(LaserScan, "scan", self.obstacle, 10)
@@ -43,11 +45,11 @@ class movement(Node):
         # Controllers
         self.clock_speed = 0.5
         self.velocity_ = self.create_publisher(Twist, "cmd_vel", 10)
-        self.timer = self.create_timer(self.clock_speed, self.movement_callback) # rate of cmds
+        self.timer = self.create_timer(self.clock_speed, self.set_velocity) # rate of cmds
         
         # Calibration settings
         self.act_dist = 0.3
-        self.timer_max = int(5 / self.clock_speed) # Units seconds to clocks
+        self.exploration_timer_max = int(5 / self.clock_speed) # Units seconds to clocks
         self.old_heading = np.array([0, 0])
         self.dir_bias = 0.4 # NOTE: if set to zero will never loop back on self for exploration
 
@@ -59,14 +61,14 @@ class movement(Node):
         self.exploration_weight = 0.4
 
         # Toggles
-        self.timer = 1
+        self.exploration_timer = 1
         self.stop = 0
         self.lpub = False
         self.rpub = False
 
     # register far away points and store them
     # Heuristic way of tracking unknowns
-    def movement_callback(self, msg):
+    def navigate(self, msg):
         def pop_fill(i, i_arr, dist_arr, f=lambda x:x):
             nonlocal msg
             i = 0
@@ -75,8 +77,8 @@ class movement(Node):
                     dist_arr.append(msg.ranges[i])
                     i_arr.append(i)
 
-                i += 1 # CAN ERR ...
-                # Can buggie if dist too large! ...
+                i += 1
+                i %= len(msg.ranges)
 
             return False
 
@@ -89,7 +91,7 @@ class movement(Node):
 
         # Rangemax
         i = 0
-        self.pop_fill(i, noise_filter_i, noise_filter_dist)
+        pop_fill(i, noise_filter_i, noise_filter_dist)
 
         # Get the furthest distance
         dx = len(msg.ranges)//7
@@ -97,14 +99,14 @@ class movement(Node):
             i = j + 0*dx # NOTE: For on the fly tuning
             for k, d in zip(noise_filter_i, noise_filter_dist):
                 if (msg.ranges[i] > d) and (msg.ranges[i] < msg.range_max):
-                    overflowed = self.pop_fill(msg, i, contender_filter_i, contender_filter_dist)
+                    overflowed = pop_fill(msg, i, contender_filter_i, contender_filter_dist)
                     if (sum(noise_filter_dist)/len(noise_filter_dist) < sum(contender_filter_dist)/len(contender_filter_dist)):
                         noise_filter_dist = contender_filter_dist
                         noise_filter_i = contender_filter_i
                     contender_filter_dist = []
                     contender_filter_i = []
 
-        absolute_sensor_position = sum(noise_filter_i)/len(noise_filter_i)
+        absolute_sensor_position = sum(noise_filter_i) / len(noise_filter_i)
         
         # Reset noise filter
         noise_filter_i = []
@@ -134,7 +136,7 @@ class movement(Node):
         
         # Fill the noise_filter
         i = 0
-        self.pop_fill(i, noise_filter_i, noise_filter_dist, f=_h)
+        pop_fill(i, noise_filter_i, noise_filter_dist, f=_h)
 
         # Increments
         da = 2. * math.pi / len(msg.ranges)
@@ -152,7 +154,7 @@ class movement(Node):
         
         if math.abs(absolute_sensor_position - exploration_sensor_position) > 10:
             # Start exploration countdown (heading reset countdown)
-            self.timer = self.timer_max
+            self.exploration_timer = self.exploration_timer_max
 
         # Actuation
         cutoff = len(msg.ranges)//3
@@ -161,8 +163,10 @@ class movement(Node):
         
         self.act_dist = sum(noise_filter_dist) / len(noise_filter_dist)
 
-    def obstacle_avoidance(self,msg):
-        self.get_logger().info('Turning')
+    # Basic Obstacle Avoidance allows for more heuristic control
+    def obstacle_avoidance(self, msg):
+        """ Turn away from obstacles in Collision Box """
+        self.get_logger().info('Avoiding Obstacles')
         dx = len(msg.ranges) // 8
 
         lwall = False
@@ -187,31 +191,36 @@ class movement(Node):
             if rwall: self.lpub = True
             elif lwall: self.rpub = True
 
-    def navigate(self, msg):
+    def obstacle(self, msg):
         x = len(msg.ranges)//8
         for j in range(x):
             i = j + 3*x
             if (msg.ranges[i] > self.act_dist * 0.9) and (msg.ranges[i] < msg.range_max):
                 self.stop = 1
                 self.obstacle_avoidance(msg)
+                self.wind_down = 10
             else:
                 self.publ = False
                 self.pubr = False
                 self.stop = 0
-                # NOTE can limit the amount of times called for performance
-                self.navigate(msg)
-      
-    # NOTE not much better than just optimizing the arc-length
-    def exploration_timer(self):
+
+                if self.wind_down > 0: self.wind_down -= 1
+                else:
+                    # NOTE can limit the amount of times called for performance
+                    self.navigate(msg)
+    
+    def dec_exploration_timer(self):
         """
         Only a certain amount of time is allotted to moving away
         from heading
         """
-        self.timer -= 1
+        self.exploration_timer -= 1
     
-    def movement_callback(self):
+    def set_velocity(self):
+        def vad(ang, dist): return np.array([dist*math.cos(ang), dist*math.sin(ang)])
+        
         # Update the current position
-        self.curr_pos += vad(self.live_dheading, self.live_drot)
+        self.curr_pos += self.vad(self.live_dheading, self.live_drot)
 
         # Move the Robot
         msg = Twist()
@@ -239,11 +248,11 @@ class movement(Node):
             self.rpub = False
             self.get_logger().info('Turning R')
         
-        # To start exploration timer is set to timer_max
-        if self.timer > 0:
-            self.exploration_timer()
-        elif self.timer == 0:
-            self.timer -= 1 # Only reset once (Assumed by now you've nearly found the next direction)
+        # To start exploration_timer is set to exploration_timer_max
+        if self.exploration_timer > 0:
+            self.dec_exploration_timer()
+        elif self.exploration_timer == 0:
+            self.exploration_timer -= 1 # Only reset once (Assumed by now you've nearly found the next direction)
             # Reset heading to new heading
             self.live_dheading = np.array([0, 0])
             self.old_rotation = self.live_drot
@@ -258,7 +267,7 @@ class movement(Node):
         self.velocity_.publish(msg)
 
         # Called at clock interval (TODO CALIBRATE)
-        self.live_drot += -math.pi/12 * self.clock_speed 
+        self.live_drot += -math.pi/12 * self.clock_speed
 
     def turnR(self):
         msg = Twist()
@@ -271,7 +280,7 @@ class movement(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = movement()
+    node = RobotController()
     rclpy.spin(node)
     rclpy.shutdown()
 
