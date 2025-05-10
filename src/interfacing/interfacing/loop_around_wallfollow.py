@@ -18,10 +18,20 @@ from sensor_msgs.msg import LaserScan
 
 import numpy
 
+class RobotController(Node):
+    """
+        Robot Movement Controller
+        
+        Tuning Parameters
+         1. Follow Right or Left Wall (self.lwall_follow)
+         2. Actuation distance
 
-class movement(Node):
+        Embedded Tuning Parameters
+         1. Slowly arc right (Tuned to open spaces in maze)
+         2. Quickly turn away from wall (Tuned to wall thickness of maze)
+    """
     def __init__(self):
-        super().__init__("number_publisher")
+        super().__init__("wallfollow_robot_controller")
 
         # Sub to sensor
         self.Lidardis = self.create_subscription(LaserScan, "scan", self.obstacle, 10)
@@ -32,7 +42,8 @@ class movement(Node):
         self.timer = self.create_timer(self.seconds_per_clock, self.set_velocity) # rate of cmds
         
         # Calibration settings
-        self.act_dist = 0.38
+        self.act_dist = 0.38 
+        self.lwall_follow = True
 
         # Toggles
         self.stop = 0
@@ -47,6 +58,7 @@ class movement(Node):
         self.turn_timer_fast_max = 0.5 # seconds
 
     def navigate(self,msg):
+        """ Keeps robot at wall """
         self.get_logger().info('Turning')
         x = len(msg.ranges) // 10
 
@@ -68,7 +80,8 @@ class movement(Node):
         
         # Engage motor actions     
         if not rwall and not lwall: 
-            self.slpub = True
+            if self.lwall_follow:   self.slpub = True
+            else:                   self.srpub = True
             self.get_logger().info('No detection')
         elif lwall: self.rpub = True
         elif rwall: self.lpub = True
@@ -78,9 +91,13 @@ class movement(Node):
             msg.angular.z = .0
             self.velocity_.publish(msg)
 
-
     def obstacle(self,msg):
+        """
+            Robot Sensor Controller/Driver
+            Operates at speed of sensor for the best problem resolution
+        """
         x = len(msg.ranges)//8
+
         # Front
         for j in range(2*x):
             i = j + 3*x
@@ -94,6 +111,8 @@ class movement(Node):
 
 
     def set_velocity(self):
+        """ Robot Motor Controller """
+
         msg = Twist()
         if (self.stop == 0):
            msg.linear.x = .5
@@ -105,9 +124,15 @@ class movement(Node):
         # set linear velocity
         self.velocity_.publish(msg)
         
-        # TODO test and calibrate
+        # Turn timers slow speed of arc reliably
+        # Easier for humans to tune.
+
         if self.turn_timer_fast % self.turn_timer_fast_max == 0:
-            if self.lpub:
+            if self.rpub and self.lwall_follow:
+                self.turnR()
+                self.rpub = False
+                self.get_logger().info('Quick Turning R')
+            elif self.lpub:
                 self.turnL()
                 self.lpub = False
                 self.get_logger().info('Quick Turning L')
@@ -126,18 +151,20 @@ class movement(Node):
                 self.srpub = False
                 self.get_logger().info('Turning R')
         
-        self.turn_timer_fast += self.seconds_per_clock
+        self.turn_timer_fast = self.seconds_per_clock
         self.turn_timer_slow += self.seconds_per_clock
 
         self.turn_timer_fast %= self.turn_timer_fast_max
         self.turn_timer_slow %= self.turn_timer_slow_max
 
     def turnL(self):
+        """ Turn robot Counterclockwise """
         msg = Twist()
-        msg.angular.z = 0.6 # Calibrate the arc
+        msg.angular.z = 0.6 # Calibrate the arc (lwall_follow)
         self.velocity_.publish(msg)
 
     def turnR(self):
+        """ Turn robot Clockwise """
         msg = Twist()
         msg.angular.z = -0.6 # Good, speed of rotate away from opposing obstacle
         self.velocity_.publish(msg)
@@ -146,11 +173,10 @@ class movement(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = movement()
-    # make node
+    node = RobotController()
+    
     rclpy.spin(node)
     rclpy.shutdown()
-    # shutdown node
 
 
 if __name__ == '__main__':
