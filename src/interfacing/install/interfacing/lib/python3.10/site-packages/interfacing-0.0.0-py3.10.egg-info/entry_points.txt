@@ -1,3 +1,0 @@
-[console_scripts]
-move_forward = interfacing.move_forward:main
-
