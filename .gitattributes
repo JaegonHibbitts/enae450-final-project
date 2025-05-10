@@ -1,0 +1,3 @@
+build/* merge=ours
+install/* merge=ours
+log/* merge=ours
