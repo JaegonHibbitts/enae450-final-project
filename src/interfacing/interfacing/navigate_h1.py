@@ -48,6 +48,7 @@ class RobotController(Node):
         self.timer = self.create_timer(self.seconds_per_clock, self.set_velocity)
         
         # Settings
+        self.act_dist = 1.2
         self.drift = 0. # 1./3
         self.stop = 0
 
@@ -202,10 +203,6 @@ class RobotController(Node):
             self.slow_release()
             self.get_logger().info('Releasing')
         
-        self.turn_timer_slow += self.seconds_per_clock
-        self.turn_timer_slow %= self.turn_timer_slow_max
-    
-
     # Make sure robot does not get stuck
     def slow_release(self):
         """

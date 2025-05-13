@@ -37,11 +37,12 @@ class RobotController(Node):
         self.Lidardis = self.create_subscription(LaserScan, "scan", self.obstacle, 10)
 
         # Controllers
+        self.seconds_per_clock = 0.25
         self.velocity_ = self.create_publisher(Twist, "cmd_vel", 10)
-        self.timer = self.create_timer(0.5, self.set_velocity) # rate of cmds
+        self.timer = self.create_timer(self.seconds_per_clock, self.set_velocity) # rate of cmds
         
         # Calibration settings
-        self.act_dist = 0.38 
+        self.act_dist = 0.38
         self.lwall_follow = True
 
         # Toggles
@@ -52,6 +53,9 @@ class RobotController(Node):
         self.srpub = False # Unused
         self.turn_timer_slow = 0
         self.turn_timer_slow_max = 2 # seconds
+
+        self.turn_timer_fast = 0
+        self.turn_timer_fast_max = 1 # seconds
 
     def navigate(self,msg):
         """ Keeps robot at wall """
