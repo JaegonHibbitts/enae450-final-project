@@ -1,0 +1,81 @@
+running egg_info
+creating ../build/interfacing/interfacing.egg-info
+writing ../build/interfacing/interfacing.egg-info/PKG-INFO
+writing dependency_links to ../build/interfacing/interfacing.egg-info/dependency_links.txt
+writing entry points to ../build/interfacing/interfacing.egg-info/entry_points.txt
+writing requirements to ../build/interfacing/interfacing.egg-info/requires.txt
+writing top-level names to ../build/interfacing/interfacing.egg-info/top_level.txt
+writing manifest file '../build/interfacing/interfacing.egg-info/SOURCES.txt'
+reading manifest file '../build/interfacing/interfacing.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../build/interfacing/interfacing.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/jaegon/enae450-final-project/src/build/interfacing/build
+creating /home/jaegon/enae450-final-project/src/build/interfacing/build/lib
+creating /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/__init__.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/Gazebo_Find_Path.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/Gazebo_Follow.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/Gazebo_Inside_Follow.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/Gazebo_Outside_Follow.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/navigate_h1.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/navigate_hbeta.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/navigate_halpha.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/Aversion.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/move_forward.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+copying interfacing/loop_around_wallfollow.py -> /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing
+running install
+running install_lib
+creating /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/__init__.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/Gazebo_Find_Path.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/Gazebo_Follow.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/Gazebo_Inside_Follow.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/Gazebo_Outside_Follow.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/navigate_h1.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/navigate_hbeta.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/navigate_halpha.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/Aversion.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/move_forward.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+copying /home/jaegon/enae450-final-project/src/build/interfacing/build/lib/interfacing/loop_around_wallfollow.py -> /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/__init__.py to __init__.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/Gazebo_Find_Path.py to Gazebo_Find_Path.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/Gazebo_Follow.py to Gazebo_Follow.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/Gazebo_Inside_Follow.py to Gazebo_Inside_Follow.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/Gazebo_Outside_Follow.py to Gazebo_Outside_Follow.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/navigate_h1.py to navigate_h1.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/navigate_hbeta.py to navigate_hbeta.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/navigate_halpha.py to navigate_halpha.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/Aversion.py to Aversion.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/move_forward.py to move_forward.cpython-310.pyc
+byte-compiling /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing/loop_around_wallfollow.py to loop_around_wallfollow.cpython-310.pyc
+running install_data
+creating /home/jaegon/enae450-final-project/src/install/interfacing/share/ament_index
+creating /home/jaegon/enae450-final-project/src/install/interfacing/share/ament_index/resource_index
+creating /home/jaegon/enae450-final-project/src/install/interfacing/share/ament_index/resource_index/packages
+copying resource/interfacing -> /home/jaegon/enae450-final-project/src/install/interfacing/share/ament_index/resource_index/packages
+copying package.xml -> /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing
+creating /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/launch
+copying launch/outside_launch.py -> /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/launch
+copying launch/inside_launch.py -> /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/launch
+creating /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/worlds
+copying worlds/tb3_4walls.world -> /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/worlds
+creating /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/models
+creating /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/models/tb3_4walls
+copying models/tb3_4walls/model.config -> /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/models/tb3_4walls
+copying models/tb3_4walls/four_walls.sdf -> /home/jaegon/enae450-final-project/src/install/interfacing/share/interfacing/models/tb3_4walls
+running install_egg_info
+Copying ../build/interfacing/interfacing.egg-info to /home/jaegon/enae450-final-project/src/install/interfacing/lib/python3.10/site-packages/interfacing-0.0.0-py3.10.egg-info
+running install_scripts
+Installing Avers script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing FollowInside script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing FollowOutside script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing Gazebo script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing Gazebo_Chat script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing h1 script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing halpha script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing hbeta script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing move_forward script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+Installing wallfollow script to /home/jaegon/enae450-final-project/src/install/interfacing/lib/interfacing
+writing list of installed files to '/home/jaegon/enae450-final-project/src/build/interfacing/install.log'

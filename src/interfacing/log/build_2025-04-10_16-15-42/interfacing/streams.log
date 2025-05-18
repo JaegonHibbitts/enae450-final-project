@@ -1,0 +1,39 @@
+[0.781s] Invoking command in '/home/icf3ver/ENAE450/final_project/src/interfacing': PYTHONPATH=/home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/interfacing build --build-base /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build install --record /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/install.log --single-version-externally-managed install_data
+[0.997s] running egg_info
+[0.997s] creating build/interfacing/interfacing.egg-info
+[0.998s] writing build/interfacing/interfacing.egg-info/PKG-INFO
+[0.998s] writing dependency_links to build/interfacing/interfacing.egg-info/dependency_links.txt
+[0.998s] writing entry points to build/interfacing/interfacing.egg-info/entry_points.txt
+[0.998s] writing requirements to build/interfacing/interfacing.egg-info/requires.txt
+[0.999s] writing top-level names to build/interfacing/interfacing.egg-info/top_level.txt
+[0.999s] writing manifest file 'build/interfacing/interfacing.egg-info/SOURCES.txt'
+[1.001s] reading manifest file 'build/interfacing/interfacing.egg-info/SOURCES.txt'
+[1.001s] adding license file 'LICENSE'
+[1.002s] writing manifest file 'build/interfacing/interfacing.egg-info/SOURCES.txt'
+[1.003s] running build
+[1.003s] running build_py
+[1.003s] creating /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build
+[1.003s] creating /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib
+[1.003s] creating /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing
+[1.004s] copying interfacing/move_forward.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing
+[1.004s] copying interfacing/__init__.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing
+[1.004s] running install
+[1.004s] running install_lib
+[1.006s] creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing
+[1.006s] copying /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing/move_forward.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing
+[1.006s] copying /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build/lib/interfacing/__init__.py -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing
+[1.007s] byte-compiling /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing/move_forward.py to move_forward.cpython-310.pyc
+[1.007s] Sorry: IndentationError: expected an indented block after function definition on line 16 (move_forward.py, line 17)
+[1.007s] byte-compiling /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing/__init__.py to __init__.cpython-310.pyc
+[1.007s] running install_data
+[1.008s] creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index
+[1.008s] creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index/resource_index
+[1.008s] creating /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index/resource_index/packages
+[1.008s] copying resource/interfacing -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/ament_index/resource_index/packages
+[1.009s] copying package.xml -> /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/share/interfacing
+[1.009s] running install_egg_info
+[1.010s] Copying build/interfacing/interfacing.egg-info to /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages/interfacing-0.0.0-py3.10.egg-info
+[1.012s] running install_scripts
+[1.036s] Installing move_forward script to /home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/interfacing
+[1.036s] writing list of installed files to '/home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/install.log'
+[1.072s] Invoked command in '/home/icf3ver/ENAE450/final_project/src/interfacing' returned '0': PYTHONPATH=/home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/icf3ver/ENAE450/final_project/src/interfacing/install/interfacing/lib/python3.10/site-packages: /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base build/interfacing build --build-base /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/build install --record /home/icf3ver/ENAE450/final_project/src/interfacing/build/interfacing/install.log --single-version-externally-managed install_data
