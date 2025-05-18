@@ -32,8 +32,8 @@ class movement(Node):
         self.timer = self.create_timer(self.seconds_per_clock, self.set_velocity) # rate of cmds
         
         # Calibration settings =================!!
-        self.act_dist = 0.5 #CHANGE THIS
-        self.obs_dist = 0.4 # CHANGE THIS
+        self.act_dist = 0.65 #CHANGE THIS
+        self.obs_dist = 0.55 # CHANGE THIS
 
         # Toggles
         self.stop = 0
@@ -57,33 +57,33 @@ class movement(Node):
         lwall_close = False
         
         # =============== SNESOR CALIBRATIONS =================
-        #This is the range of the LIDAR point front left of robot
+        #This is the range of the LIDAR point front RIGHT of robot
         for j in range(2*x): # NOTE: this sensor is slightly larger!
             i = j + 0*x
             if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
                 lwall = True
                 self.get_logger().info('Left wall detected')
 
-        #This is the range of the LIDAR point front right of robot
+        #This is the range of the LIDAR point front LEFT of robot
         for j in range(2*x):
             i = j + 8*x
             if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
                 rwall = True
                 self.get_logger().info('Right wall detected')
         
-        #This is the range of the LIDAR pointing straight left of robot
-        for j in range(x):
-            i = j + 2*x
-            if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
-                lwall_close = True
-                self.get_logger().info('Right wall detected')
+        # #This is the range of the LIDAR pointing straight left of robot
+        # for j in range(x):
+        #     i = j + 2*x
+        #     if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+        #         lwall_close = True
+        #         self.get_logger().info('Right wall detected')
         
-        #This is the range of the LIDAR pointing straight right of robot
-        for j in range(x):
-            i = j + 7*x
-            if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
-                rwall_close = True
-                self.get_logger().info('Right wall detected')
+        # #This is the range of the LIDAR pointing straight right of robot
+        # for j in range(x):
+        #     i = j + 7*x
+        #     if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+        #         rwall_close = True
+        #         self.get_logger().info('Left wall detected')
         
         # Engage motor actions     
         if not rwall and not lwall: 
@@ -91,8 +91,8 @@ class movement(Node):
             self.get_logger().info('No detection')
         elif lwall: self.rpub = True
         elif rwall: self.lpub = True
-        elif lwall_close: self.rpub_fast = True
-        elif rwall_close: self.lpub_fast = True
+        elif lwall_close: self.rpub_fast = True #Currently unused
+        elif rwall_close: self.lpub_fast = True #Currently unused
         
         else:
             # Stop rotation here (No timer callback)
@@ -102,10 +102,18 @@ class movement(Node):
 
 
     def obstacle(self,msg):
-        x = len(msg.ranges)//8
+        x = len(msg.ranges)//10
         # Front
-        for j in range(2*x):
+        for j in range(x):
             i = j + 0*x
+            if (msg.ranges[i] < self.obs_dist) and (msg.ranges[i] > msg.range_min):
+                self.stop = 1
+                break
+            else:
+                self.stop = 0
+        
+        for j in range(x):
+            i = j + 9*x
             if (msg.ranges[i] < self.obs_dist) and (msg.ranges[i] > msg.range_min):
                 self.stop = 1
                 break

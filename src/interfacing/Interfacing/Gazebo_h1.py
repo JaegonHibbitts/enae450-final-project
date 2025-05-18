@@ -120,13 +120,18 @@ class Movement(Node):
 
 
     def obstacle(self,msg):
-        x = len(msg.ranges)//7
+        x = len(msg.ranges)//10
 
         maybe_open_ahead = True
         for j in range(x):
-            i = j + 3*x
+            i = j + 9*x
             # If one point in the range is worse than the act_dist 
             # (Then we're committing)
+            if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] < msg.range_max):
+                maybe_open_ahead = False
+                break
+        for j in range(x):
+            i = j + 0*x
             if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] < msg.range_max):
                 maybe_open_ahead = False
                 break
@@ -151,7 +156,7 @@ class Movement(Node):
     def set_velocity(self):
         msg = Twist()
         if self.stop == 0:
-           msg.linear.x = .5
+           msg.linear.x = .2
            self.get_logger().info('Moving')
         else:
            msg.linear.x = .0
@@ -181,18 +186,18 @@ class Movement(Node):
     def slow_release(self):
         # Make sure robot does not get stuck
         msg = Twist()
-        msg.linear.x = .2
-        msg.angular.z = .2 * (-1 if self.blpub else 1)
+        msg.linear.x = .1
+        msg.angular.z = .1 * (-1 if self.blpub else 1)
         self.velocity_.publish(msg)
 
     def turnL(self):
         msg = Twist()
-        msg.angular.z = -.4
+        msg.angular.z = -.2
         self.velocity_.publish(msg)
 
     def turnR(self):
         msg = Twist()
-        msg.angular.z = .4
+        msg.angular.z = .2
         self.velocity_.publish(msg)
         
 
