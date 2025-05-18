@@ -1,26 +1,31 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
-  <world name="default">
+  <world name="maze_2_world">
 
-    <!-- This line loads the plugin required for spawning robots -->
+    <!-- Required plugin for ROS-Gazebo interaction -->
     <plugin name="gazebo_ros_factory" filename="libgazebo_ros_factory.so"/>
 
+    <!-- Ground plane -->
     <include>
       <uri>model://ground_plane</uri>
     </include>
 
+    <!-- Sun (lighting) -->
     <include>
       <uri>model://sun</uri>
     </include>
 
     <include>
-      <uri>model://tb3_4walls</uri>
+      <uri>model://maze_2</uri>  <!-- Must match model.config -->
+      <pose>0 0 0 0 0 0</pose>   <!-- x y z roll pitch yaw -->
     </include>
 
+    <!-- Scene settings (shadows, etc.) -->
     <scene>
       <shadows>false</shadows>
     </scene>
 
+    <!-- Default camera view -->
     <gui fullscreen='0'>
       <camera name='user_camera'>
         <pose frame=''>0.319654 -0.235002 9.29441 0 1.5138 0.009599</pose>
@@ -29,6 +34,7 @@
       </camera>
     </gui>
 
+    <!-- Physics engine settings (same as original) -->
     <physics type="ode">
       <real_time_update_rate>1000.0</real_time_update_rate>
       <max_step_size>0.001</max_step_size>
@@ -50,11 +56,9 @@
       </ode>
     </physics>
 
-    <model name="tb3_4walls">
-      <static>1</static>
-      <include>
-        <uri>model://tb3_4walls</uri>
-      </include>
+    <!-- Optional: If your maze is static (unchanging), declare it -->
+    <model name="maze_2">
+      <static>true</static>  <!-- Prevents physics updates for better performance -->
     </model>
 
   </world>

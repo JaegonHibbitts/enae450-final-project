@@ -31,9 +31,9 @@ class movement(Node):
         self.velocity_ = self.create_publisher(Twist, "cmd_vel", 10)
         self.timer = self.create_timer(self.seconds_per_clock, self.set_velocity) # rate of cmds
         
-        # Calibration settings
-        self.act_dist = 0.75
-        self.obs_dist = 0.5
+        # Calibration settings =================!!
+        self.act_dist = 0.5 #CHANGE THIS
+        self.obs_dist = 0.4 # CHANGE THIS
 
         # Toggles
         self.stop = 0
@@ -49,37 +49,41 @@ class movement(Node):
 
     def navigate(self,msg):
         self.get_logger().info('Turning')
-        x = len(msg.ranges) // 8
+        x = len(msg.ranges) // 10
 
         lwall = False
         rwall = False
-        # Front Left
-        for j in range(x): # NOTE: this sensor is slightly larger!
+        rwall_close = False
+        lwall_close = False
+        
+        # =============== SNESOR CALIBRATIONS =================
+        #This is the range of the LIDAR point front left of robot
+        for j in range(2*x): # NOTE: this sensor is slightly larger!
             i = j + 0*x
             if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
                 lwall = True
                 self.get_logger().info('Left wall detected')
 
-        # Front Right
-        for j in range(x):
-            i = j + 7*x
+        #This is the range of the LIDAR point front right of robot
+        for j in range(2*x):
+            i = j + 8*x
             if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
                 rwall = True
                 self.get_logger().info('Right wall detected')
         
-        #Striaght Left (broad) --> Limit to 0.5m
-        for j in range(2*x):
-            i = j + 1*x
-            if (msg.ranges[i] < self.obs_dist) and (msg.ranges[i] > msg.range_min):
-                lwall = True
-                self.get_logger().info('Left wall detected @0.5m')
+        #This is the range of the LIDAR pointing straight left of robot
+        for j in range(x):
+            i = j + 2*x
+            if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+                lwall_close = True
+                self.get_logger().info('Right wall detected')
         
-        #Striaght Right (broad) --> limit to 0.5m
-        for j in range(2*x):
-            i = j + 5*x
-            if (msg.ranges[i] < self.obs_dist) and (msg.ranges[i] > msg.range_min):
-                rwall = True
-                self.get_logger().info('Right wall detected @0.5m')
+        #This is the range of the LIDAR pointing straight right of robot
+        for j in range(x):
+            i = j + 7*x
+            if (msg.ranges[i] < self.act_dist) and (msg.ranges[i] > msg.range_min):
+                rwall_close = True
+                self.get_logger().info('Right wall detected')
         
         # Engage motor actions     
         if not rwall and not lwall: 
@@ -87,6 +91,9 @@ class movement(Node):
             self.get_logger().info('No detection')
         elif lwall: self.rpub = True
         elif rwall: self.lpub = True
+        elif lwall_close: self.rpub_fast = True
+        elif rwall_close: self.lpub_fast = True
+        
         else:
             # Stop rotation here (No timer callback)
             msg = Twist()
@@ -108,6 +115,7 @@ class movement(Node):
         self.navigate(msg)
 
 
+    #CHANGE ANGULAR X TO MAKE MOVE FOWARD FASTER
     def set_velocity(self):
         msg = Twist()
         if (self.stop == 0):
@@ -147,6 +155,7 @@ class movement(Node):
         self.turn_timer_fast %= self.turn_timer_fast_max
         self.turn_timer_slow %= self.turn_timer_slow_max
 
+    #CHAGE ANGULAR Z TO MAKE TURN FASTER
     def turnL(self):
         msg = Twist()
         msg.angular.z = 0.175 # Calibrate the arc
